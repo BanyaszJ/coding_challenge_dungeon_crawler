@@ -8,7 +8,7 @@ GOLD_MAP = [[1, 0, 2],
             [2, 3, 5],
             [20, 1, 2]]
 
-STARTING_HP = 50
+STARTING_HP = 10
 
 def combine_maps(map_a, map_b):
     """Combine two 2D maps into a single map."""
