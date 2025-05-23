@@ -96,14 +96,14 @@ def find_best_solution(grid, paths):
         print(f"Possible maximum gold: {max_possible_gold}")
         print()
 
-    return most_gold_so_far, path_idx, path
+    return most_gold_so_far, path_idx
 
 
 if __name__ == "__main__":
     combined_map = combine_maps(DUNGEON_MAP, GOLD_MAP)
 
     all_valid_paths = find_all_paths(DUNGEON_MAP)
-    gold, idx, path_coords = find_best_solution(combined_map, all_valid_paths)
+    gold, idx = find_best_solution(combined_map, all_valid_paths)
 
     print("-" * 20 + " SOLUTION " + "-" * 20)
     print(f"Best path: #{idx}")
