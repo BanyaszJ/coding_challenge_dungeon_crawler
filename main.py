@@ -63,7 +63,6 @@ def find_all_paths(grid):
     dfs(0, 0, [])
     return all_paths
 
-
 def find_best_solution(grid, paths):
     """
     Print all paths with their corresponding values from the grid.
