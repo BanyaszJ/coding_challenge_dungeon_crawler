@@ -8,7 +8,7 @@ GOLD_MAP = [[1, 0, 2],
             [2, 3, 5],
             [20, 1, 2]]
 
-STARTING_HP = 10
+STARTING_HP = 50
 
 def combine_maps(map_a, map_b):
     """Combine two 2D maps into a single map."""
@@ -73,37 +73,40 @@ def find_best_solution(grid, paths):
         paths: List of coordinate paths
     """
 
-    most_gold_so_far = 0
+    results_so_far = []
     for path_idx, path in enumerate(paths):
         print(f"Path {path_idx}: {path}")
 
         health_list = [grid[row][col][0] for row, col in path]
         gold_list = [grid[row][col][1] for row, col in path]
-        max_possible_gold = sum(gold_list)
 
         current_hp = STARTING_HP
-        for hp_modifier in health_list:
-            current_hp += hp_modifier
+        current_gold = 0
+        for idx, _ in enumerate(health_list):
+            current_hp += health_list[idx]
             if current_hp <= 0:
-                print(f"Path {path_idx} is invalid. Current HP: {current_hp}")
+                print(f"Path {path_idx} is invalid. RIP in peace, died with HP: {current_hp} gold: {current_gold}")
                 break
-            most_gold_so_far = max_possible_gold
+            current_gold += gold_list[idx]
 
         print(f"Starting HP: {STARTING_HP}")
         print(f"Health modifiers encountered: {health_list}")
         print(f"Gold modifiers encountered: {gold_list}")
+        print(f"Max possible gold: {sum(gold_list)}")
         print(f"Finishing HP: {current_hp}")
-        print(f"Possible maximum gold: {max_possible_gold}")
+        print(f"Finishing gold: {current_gold}")
         print()
+        results_so_far.append((path_idx, current_gold))
 
-    return most_gold_so_far, path_idx
+    results_so_far.sort(key=lambda x: x[1], reverse=True)
+    return results_so_far[0][0], results_so_far[0][1]
 
 
 if __name__ == "__main__":
     combined_map = combine_maps(DUNGEON_MAP, GOLD_MAP)
 
     all_valid_paths = find_all_paths(DUNGEON_MAP)
-    gold, idx = find_best_solution(combined_map, all_valid_paths)
+    idx, gold = find_best_solution(combined_map, all_valid_paths)
 
     print("-" * 20 + " SOLUTION " + "-" * 20)
     print(f"Best path: #{idx}")
